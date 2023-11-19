@@ -1,7 +1,24 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+// import { translateText } from './translate.js';
+import * as deepl from 'deepl-node';
 
-function Chat({ socket, username, room }) {
+const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"; // Replace with your key
+const translator = new deepl.Translator(authKey);
+
+async function translateText(text, fromLanguage, toLanguage) {
+    try {
+        const result = await translator.translateText(text, fromLanguage, toLanguage);
+        return result.text; // The translated text
+    } catch (error) {
+        // Handle the error appropriately in your context
+        console.error('Error during translation:', error);
+        throw error; // Rethrow the error if you want to handle it at a higher level
+    }
+}
+
+
+async function Chat({ socket, username, room, preferredLang }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
@@ -11,6 +28,7 @@ function Chat({ socket, username, room }) {
         room: room,
         author: username,
         message: currentMessage,
+        preferredLang: preferredLang,
         time:
           new Date(Date.now()).getHours() +
           ":" +
@@ -36,7 +54,7 @@ function Chat({ socket, username, room }) {
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => {
+          {messageList.map(async (messageContent) => {
             return (
               <div
                 className="message"
@@ -45,9 +63,8 @@ function Chat({ socket, username, room }) {
                 <div>
                   <div className="message-content">
                     <p>{messageContent.message}</p>
-                    {/* <br></br>
                     <hr></hr>
-                    <p>Place holder for the translation</p> */}
+                    <p>{await translateText(messageContent.message, messageContent.preferredLang, preferredLang)}</p>
                   </div>
                   <div className="message-meta">
                     <p id="time">{messageContent.time}</p>
