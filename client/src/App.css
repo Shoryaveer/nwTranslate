@@ -52,6 +52,28 @@ body {
   background-color: rgb(255, 214, 221);
 }
 
+select {
+  width: 224px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  appearance: none; /* This disables the default styling for select in most browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Styling for arrow down icon */
+select {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px top 50%, #fff;
+  background-size: 12px;
+}
+
 .joinChatWelcome img {
   margin-top: 10px;
 }

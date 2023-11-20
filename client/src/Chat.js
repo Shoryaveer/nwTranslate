@@ -1,9 +1,28 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+// import { translateText } from './translate.js';
+// import * as deepl from 'deepl-node';
 
-function Chat({ socket, username, room }) {
+// const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"; // Replace with your key
+// const translator = new deepl.Translator(authKey);
+
+// async function translateText(text, toLanguage) {
+//     try {
+//         const result = await translator.translateText(text, null, toLanguage);
+//         return result.text; // The translated text
+//     } catch (error) {
+//         // Handle the error appropriately in your context
+//         console.error('Error during translation:', error);
+//         throw error; // Rethrow the error if you want to handle it at a higher level
+//     }
+// }
+
+
+function Chat({ socket, username, room, preferredLang }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  // const [translatedMessage, setTranslatedMessage] = useState([]);
+
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -11,6 +30,7 @@ function Chat({ socket, username, room }) {
         room: room,
         author: username,
         message: currentMessage,
+        preferredLang: preferredLang,
         time:
           new Date(Date.now()).getHours() +
           ":" +
@@ -26,8 +46,16 @@ function Chat({ socket, username, room }) {
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
+      // await socket.emit("translate", {author : username, message : messageList.message, targetLang: preferredLang});
     });
   }, [socket]);
+
+  // useEffect(() => {
+  //   socket.on("receive_translation", async (data) => {
+  //     setTranslatedMessage((list) => [...list, data]);
+  //   });
+  // }, [socket]);
+
 
   return (
     <div className="chat-window">
@@ -36,18 +64,21 @@ function Chat({ socket, username, room }) {
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => {
+          {messageList.map((messageContent, index) => {
             return (
               <div
+                key={index}
                 className="message"
                 id={username === messageContent.author ? "you" : "other"}
               >
                 <div>
                   <div className="message-content">
                     <p>{messageContent.message}</p>
-                    {/* <br></br>
                     <hr></hr>
-                    <p>Place holder for the translation</p> */}
+                    {
+                        <p>{preferredLang === "ES"? messageContent.ES:messageContent.EN}</p>
+                        // <p>{messageContent.translated}</p>
+                    }
                   </div>
                   <div className="message-meta">
                     <p id="time">{messageContent.time}</p>
