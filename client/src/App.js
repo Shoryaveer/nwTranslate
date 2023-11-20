@@ -9,9 +9,10 @@ function App() {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
+  const [language, setLanguage] = useState("EN-US");
 
   const joinRoom = () => {
-    if (username !== "" && room !== "") {
+    if (username !== "" && room !== "" && language !== "") {
       socket.emit("join_room", room);
       setShowChat(true);
     }
@@ -39,10 +40,15 @@ function App() {
               setRoom(event.target.value);
             }}
           />
+          What Language do you speak?
+          <select className="language-select" onChange={e => setLanguage(e.target.value)}>
+            <option value="en-US">EN-US</option>
+            <option value="es">ES</option>
+          </select>
           <button onClick={joinRoom}>Start!</button>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chat socket={socket} username={username} room={room} preferredLang = {language}/>
       )}
     </div>
   );
