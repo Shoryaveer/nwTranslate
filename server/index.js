@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const app = express();
 const http = require("http");
@@ -8,7 +10,7 @@ app.use(cors());
 const deepl = require('deepl-node');
 
 
-const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"; // Replace with your key
+const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"
 const translator = new deepl.Translator(authKey);
 
 const server = http.createServer(app);
