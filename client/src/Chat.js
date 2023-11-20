@@ -31,7 +31,9 @@ function Chat({ socket, username, room }) {
 
   return (
     <div className="chat-window">
-      <div className="chat-title">ChatBridge</div>
+      <div className="chat-title">
+        <img src="switch-logo.png" width="200"/>
+      </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
           {messageList.map((messageContent) => {
