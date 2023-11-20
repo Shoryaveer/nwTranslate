@@ -16,14 +16,17 @@ body {
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 
 .joinChatContainer {
+  width: 700px;
+  background-color: white;
+  border-radius: 20px;
+  border-width: 10px;
+  border-color: black;
+  border-style: solid;
   display: flex;
   flex-direction: column;
-  text-align: center;
-}
-
-.joinChatContainer h3 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  height: 80%;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .joinChatContainer input {
@@ -36,21 +39,49 @@ body {
   font-size: 16px;
 }
 
+.joinChatWelcome {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90%;
+  height: 30%;
+  margin: 20px;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 5px;
+  background-color: rgb(255, 214, 221);
+}
+
+.joinChatWelcome img {
+  margin-top: 10px;
+}
+
+.joinChatWelcome p {
+  font-size: 50px;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
 .joinChatContainer button {
-  width: 225px;
-  height: 50px;
+  width: 90%;
+  height: 20%;
   margin: 7px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   padding: 5px;
-  font-size: 16px;
-  background: #43a047;
-  color: #fff;
+  font-size: 45px;
+  font-weight: bold;
+  background: #cbf8b0;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color: #000000;
   cursor: pointer;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #000000;
 }
 
 .joinChatContainer button:hover {
-  background: #2e7d32;
+  background: #baf797;
 }
 
 .chat-window {
