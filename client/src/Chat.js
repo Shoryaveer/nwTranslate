@@ -3,7 +3,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 // import { translateText } from './translate.js';
 // import * as deepl from 'deepl-node';
 
-// const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"; // Replace with your key
+// const authKey = "---"; // Replace with your key
 // const translator = new deepl.Translator(authKey);
 
 // async function translateText(text, toLanguage) {
