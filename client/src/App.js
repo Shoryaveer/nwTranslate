@@ -7,12 +7,12 @@ const socket = io.connect("http://localhost:3001");
 
 function App() {
   const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
-  const [preferredLang, setpreferredLang] = useState("");
+  const [room, setRoom] = useState("123");
   const [showChat, setShowChat] = useState(false);
+  const [language, setLanguage] = useState("EN-US");
 
   const joinRoom = () => {
-    if (username !== "" && room !== "") {
+    if (username !== "" && room !== "" && language !== "") {
       socket.emit("join_room", room);
       setShowChat(true);
     }
@@ -22,7 +22,10 @@ function App() {
     <div className="App">
       {!showChat ? (
         <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
+          <div className="joinChatWelcome">
+            <p>Welcome To: Switch!</p>
+            <img src="switch-logo.png" width={250}/>
+          </div>
           <input
             type="text"
             placeholder="Name"
@@ -30,24 +33,22 @@ function App() {
               setUsername(event.target.value);
             }}
           />
-          <input
+          {/* <input
             type="text"
-            placeholder="Room ID"
+            placeholder="Room ID..."
             onChange={(event) => {
               setRoom(event.target.value);
             }}
-          />
-          <input
-            type="text"
-            placeholder="Language Code"
-            onChange={(event) => {
-              setpreferredLang(event.target.value);
-            }}
-          />
-          <button onClick={joinRoom}>Join A Room</button>
+          /> */}
+          What Language do you speak?
+          <select className="language-select" onChange={e => setLanguage(e.target.value)}>
+            <option value="en-US">EN-US</option>
+            <option value="es">ES</option>
+          </select>
+          <button onClick={joinRoom}>Start!</button>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} prepreferredLang = {preferredLang}/>
+        <Chat socket={socket} username={username} room={room} preferredLang = {language}/>
       )}
     </div>
   );

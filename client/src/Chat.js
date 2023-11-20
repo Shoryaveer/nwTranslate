@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 // import { translateText } from './translate.js';
-import * as deepl from 'deepl-node';
+// import * as deepl from 'deepl-node';
 
-const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"; // Replace with your key
-const translator = new deepl.Translator(authKey);
+// const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"; // Replace with your key
+// const translator = new deepl.Translator(authKey);
 
-async function translateText(text, fromLanguage, toLanguage) {
-    try {
-        const result = await translator.translateText(text, fromLanguage, toLanguage);
-        return result.text; // The translated text
-    } catch (error) {
-        // Handle the error appropriately in your context
-        console.error('Error during translation:', error);
-        throw error; // Rethrow the error if you want to handle it at a higher level
-    }
-}
+// async function translateText(text, toLanguage) {
+//     try {
+//         const result = await translator.translateText(text, null, toLanguage);
+//         return result.text; // The translated text
+//     } catch (error) {
+//         // Handle the error appropriately in your context
+//         console.error('Error during translation:', error);
+//         throw error; // Rethrow the error if you want to handle it at a higher level
+//     }
+// }
 
 
-async function Chat({ socket, username, room, preferredLang }) {
+function Chat({ socket, username, room, preferredLang }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  // const [translatedMessage, setTranslatedMessage] = useState([]);
+
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -44,19 +46,28 @@ async function Chat({ socket, username, room, preferredLang }) {
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
+      // await socket.emit("translate", {author : username, message : messageList.message, targetLang: preferredLang});
     });
   }, [socket]);
 
+  // useEffect(() => {
+  //   socket.on("receive_translation", async (data) => {
+  //     setTranslatedMessage((list) => [...list, data]);
+  //   });
+  // }, [socket]);
+
+
   return (
     <div className="chat-window">
-      <div className="chat-header">
-        <p>Live Chat</p>
+      <div className="chat-title">
+        <img src="switch-logo.png" width={200}></img>
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map(async (messageContent) => {
+          {messageList.map((messageContent, index) => {
             return (
               <div
+                key={index}
                 className="message"
                 id={username === messageContent.author ? "you" : "other"}
               >
@@ -64,7 +75,10 @@ async function Chat({ socket, username, room, preferredLang }) {
                   <div className="message-content">
                     <p>{messageContent.message}</p>
                     <hr></hr>
-                    <p>{await translateText(messageContent.message, messageContent.preferredLang, preferredLang)}</p>
+                    {
+                        <p>{messageContent.author != username? (preferredLang =="ES"? messageContent.EN:messageContent.ES):""}</p>
+                        // <p>{messageContent.translated}</p>
+                    }
                   </div>
                   <div className="message-meta">
                     <p id="time">{messageContent.time}</p>
