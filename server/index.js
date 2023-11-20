@@ -10,7 +10,7 @@ app.use(cors());
 const deepl = require('deepl-node');
 
 
-const authKey = "2de7d025-1190-dae9-3340-692a41756c47:fx"
+const authKey = process.env.AUTH_KEY
 const translator = new deepl.Translator(authKey);
 
 const server = http.createServer(app);
