@@ -21,7 +21,10 @@ function App() {
     <div className="App">
       {!showChat ? (
         <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
+          <div className="joinChatWelcome">
+            <p>Welcome To: Switch!</p>
+            <img src="switch-logo.png" width={250}/>
+          </div>
           <input
             type="text"
             placeholder="Name"
@@ -36,7 +39,7 @@ function App() {
               setRoom(event.target.value);
             }}
           />
-          <button onClick={joinRoom}>Join A Room</button>
+          <button onClick={joinRoom}>Start!</button>
         </div>
       ) : (
         <Chat socket={socket} username={username} room={room} />
